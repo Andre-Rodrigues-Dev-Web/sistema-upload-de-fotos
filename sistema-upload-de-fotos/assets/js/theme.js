@@ -6,7 +6,6 @@ document.getElementById('capa').addEventListener('change', (event) => {
     const [file] = event.target.files;
 
     if (file) {
-        // Simulando carregamento com barra de progresso
         let progressValue = 0;
         progressBar.style.display = "block";
         const interval = setInterval(() => {
@@ -15,7 +14,6 @@ document.getElementById('capa').addEventListener('change', (event) => {
                 progressBar.value = progressValue;
             } else {
                 clearInterval(interval);
-                // Mostrando a imagem depois de "carregar"
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     imagePreview.src = e.target.result;
