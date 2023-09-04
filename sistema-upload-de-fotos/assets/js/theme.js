@@ -100,38 +100,36 @@ function showFilterOptions(img) {
 //Drag and drop
 let draggedImage;
 
-document.addEventListener("dragstart", function(event) {
+const handleDragStart = event => {
     draggedImage = event.target;
     event.target.style.opacity = 0.5;
-}, false);
+}
 
-document.addEventListener("dragover", function(event) {
+const handleDragOver = event => {
     event.preventDefault();
-}, false);
+}
 
-document.addEventListener("dragleave", function(event) {
+const handleDragLeaveOrEnd = event => {
     event.target.style.opacity = "";
-}, false);
+}
 
-document.addEventListener("drop", function(event) {
+const handleDrop = event => {
     event.preventDefault();
 
-    if (event.target.className == "loaded-image") {
+    if (event.target.className === "loaded-image") {
         const container = document.getElementById('imagesContainer');
-        const rect = event.target.getBoundingClientRect();
-        const x = event.clientX - rect.left;
+        const { left, width } = event.target.getBoundingClientRect();
+        const x = event.clientX - left;
 
-        if (x < rect.width / 2) {
-            container.insertBefore(draggedImage, event.target);
-        } else {
-            container.insertBefore(draggedImage, event.target.nextSibling);
-        }
+        const refNode = x < width / 2 ? event.target : event.target.nextSibling;
+        container.insertBefore(draggedImage, refNode);
     }
 
     event.target.style.opacity = "";
-}, false);
+}
 
-document.addEventListener("dragend", function(event) {
-    event.target.style.opacity = "";
-}, false);
-
+document.addEventListener("dragstart", handleDragStart);
+document.addEventListener("dragover", handleDragOver);
+document.addEventListener("dragleave", handleDragLeaveOrEnd);
+document.addEventListener("drop", handleDrop);
+document.addEventListener("dragend", handleDragLeaveOrEnd);
