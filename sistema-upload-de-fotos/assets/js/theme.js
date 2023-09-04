@@ -6,7 +6,6 @@ document.getElementById('capa').addEventListener('change', (event) => {
     const [file] = event.target.files;
 
     if (file) {
-        // Simulando carregamento com barra de progresso
         let progressValue = 0;
         progressBar.style.display = "block";
         const interval = setInterval(() => {
@@ -15,7 +14,6 @@ document.getElementById('capa').addEventListener('change', (event) => {
                 progressBar.value = progressValue;
             } else {
                 clearInterval(interval);
-                // Mostrando a imagem depois de "carregar"
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     imagePreview.src = e.target.result;
@@ -30,6 +28,7 @@ document.getElementById('capa').addEventListener('change', (event) => {
 //Evento que carrega as imagens do album
 document.getElementById('fotos').addEventListener('change', event => {
     const imagesContainer = document.getElementById('imagesContainer');
+    
     [...event.target.files].forEach(file => {
         const reader = new FileReader();
 
@@ -47,7 +46,15 @@ document.getElementById('fotos').addEventListener('change', event => {
             removeButton.classList.add('remove-button');
             removeButton.addEventListener('click', () => imagesContainer.removeChild(imgContainer));
 
-            imgContainer.append(img, removeButton);
+            const filterButton = document.createElement('button');
+            filterButton.innerHTML = '<i class="fas fa-paint-brush"></i> Aplicar filtro';
+            filterButton.classList.add('filter-button');
+            filterButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                showFilterOptions(img);
+            });
+
+            imgContainer.append(img, removeButton, filterButton);
             imagesContainer.appendChild(imgContainer);
         };
 
@@ -55,6 +62,41 @@ document.getElementById('fotos').addEventListener('change', event => {
     });
 });
 
+//Filtros
+function showFilterOptions(img) {
+    const modal = document.createElement('div');
+    modal.classList.add('filter-options');
+
+    const filters = [
+        { text: 'Escala de Cinza', style: 'filter: grayscale(100%)' },
+        { text: 'Desfoque', style: 'filter: blur(5px)' },
+        { text: 'Sépia', style: 'filter: sepia(100%)' },
+        { text: 'Brilho', style: 'filter: brightness(150%)' },
+        { text: 'Contraste', style: 'filter: contrast(150%)' },
+        { text: 'Rotação de Matiz', style: 'filter: hue-rotate(90deg)' },
+        { text: 'Inverter', style: 'filter: invert(100%)' },
+        { text: 'Saturação', style: 'filter: saturate(200%)' },
+        { text: 'Opacidade', style: 'filter: opacity(50%)' },
+        { text: 'Sombra', style: 'filter: drop-shadow(5px 5px 5px gray)' },
+        { text: 'Rotacionar 45°', style: 'transform: rotate(45deg)' },
+        { text: 'Escalar 1.5x', style: 'transform: scale(1.5)' },
+        { text: 'Mover 30px à direita', style: 'transform: translateX(30px)' },
+        { text: 'Cor Azul', style: 'color: blue' },
+        { text: 'Estilo Normal', style: '' }
+    ];
+
+    filters.forEach(filter => {
+        const btn = document.createElement('button');
+        btn.innerText = filter.text;
+        btn.addEventListener('click', () => {
+            img.style.cssText = filter.style;
+            document.body.removeChild(modal);
+        });
+        modal.appendChild(btn);
+    });
+
+    document.body.appendChild(modal);
+}
 //Drag and drop
 let draggedImage;
 

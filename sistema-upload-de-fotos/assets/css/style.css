@@ -14,6 +14,15 @@ form {
   border: 1px solid #ddd;
 }
 
+.watermark {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  opacity: 0.5;
+  z-index: 1;
+  width: 23px;
+}
+
 .loaded-image {
   width: 150px;
   height: 150px;
@@ -53,8 +62,56 @@ form {
   font-size: 14px;
 }
 
+.download-button {
+  background-color: rgba(45, 37, 37, 0.5490196078);
+  border: none;
+  color: #fff;
+  position: absolute;
+  right: 4px;
+  top: 38px;
+}
+
 .layout {
   background-color: #fff;
   height: 100vh;
   width: 100%;
+}
+
+.filter-options {
+  position: absolute;
+  top: 44%;
+  right: 15%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.filter-options button {
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 10px;
+}
+.filter-options button:first-child {
+  background-color: #9e9e9e;
+}
+.filter-options button:last-child {
+  background-color: #2196f3;
+}
+.filter-options button:nth-child(2) {
+  background-color: crimson;
+}
+
+.filter-button {
+  border: none;
+  font-weight: 600;
+  padding: 4px 5px;
+  position: absolute;
+  left: 4px;
+  top: 113px;
+  width: 134px;
 }/*# sourceMappingURL=style.css.map */
